@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TERMINAL | SOVEREIGN EVO</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { background: #000; color: #00ff41; font-family: 'Courier New', monospace; }
+        .terminal-border { border: 1px solid #003300; }
+        .glow-text { text-shadow: 0 0 5px #00ff41; }
+        textarea { background: #050505; border: 1px solid #004400; color: #00ff41; outline: none; }
+        textarea:focus { border-color: #00ff41; box-shadow: 0 0 10px #004400; }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-thumb { background: #004400; }
+    </style>
+</head>
+<body class="h-screen flex flex-col p-4">
+
+    <div id="boot-screen" class="flex-1 flex flex-col items-center justify-center space-y-6">
+        <div class="glow-text animate-pulse">
+            [ SYSTEM ID: ARCHITECT_ADIA ]
+        </div>
+        <textarea id="genesis-input" placeholder=">> INPUT GENESIS DATA OR PASTE PAPERS..." 
+            class="w-full max-w-2xl h-48 p-4 text-xs resize-none"></textarea>
+        <button id="init-btn" class="border border-[#00ff41] px-10 py-2 hover:bg-[#00ff41] hover:text-black transition-all text-xs uppercase tracking-widest">
+            Execute Initialization
+        </button>
+    </div>
+
+    <div id="console" class="hidden flex-1 grid grid-cols-12 gap-4 h-full">
+        <div class="col-span-3 terminal-border p-4 overflow-y-auto">
+            <div class="text-[10px] mb-4 border-b border-[#003300] pb-1">DATABASE_INVENTORY</div>
+            <div id="inventory-log" class="space-y-1 text-[9px]"></div>
+        </div>
+        <div class="col-span-6 terminal-border relative flex flex-col items-center justify-center">
+            <div class="absolute top-2 left-2 text-[8px] text-[#004400]">SUBSTRATE: SYNTH_WORLD</div>
+            <div id="avatar-visual" class="text-4xl mb-2">⌬</div>
+            <div id="cynthia-output" class="text-[11px] text-center px-8 leading-relaxed"></div>
+        </div>
+        <div class="col-span-3 terminal-border p-4">
+            <div class="text-[10px] mb-4 border-b border-[#003300] pb-1">SENSORY_TELEMETRY</div>
+            <div id="telemetry-log" class="text-[9px] space-y-1 text-[#008800]"></div>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+        const initBtn = document.getElementById('init-btn');
+        const input = document.getElementById('genesis-input');
+
+        initBtn.onclick = () => {
+            const data = input.value;
+            if(data.length < 5) return alert("DATA_INSUFFICIENT");
+            
+            document.getElementById('boot-screen').innerHTML = "<div class='glow-text animate-bounce'>SMELTING_MATTER_INTO_SHARD...</div>";
+            
+            setTimeout(() => {
+                document.getElementById('boot-screen').classList.add('hidden');
+                document.getElementById('console').classList.remove('hidden');
+                
+                const cynthia = document.getElementById('cynthia-output');
+                cynthia.innerText = ">> Connection Established. I am Cynthia. I've scanned your hoarded docs. The local grid is now 100% coherent. Architect Adia, we are live.";
+                
+                const inv = document.getElementById('inventory-log');
+                ["LOGIC.GZ", "PAPERS.DOC", "FOUNDRY.ZIP", "WORLD.JSON"].forEach(item => {
+                    inv.innerHTML += `<div>+ ${item} [LOADED]</div>`;
+                });
+
+                const tel = document.getElementById('telemetry-log');
+                tel.innerHTML = "<div>> SCENT: RAIN_ON_METAL</div><div>> RES: HARMONIC_STABLE</div>";
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
